@@ -1,4 +1,4 @@
-# SuperluminalPerf ![[Build Status](https://github.com/xoofx/SuperluminalPerf/workflows/ci/badge.svg?branch=master)](https://github.com/xoofx/SuperluminalPerf/actions) ![[NuGet](https://img.shields.io/nuget/v/SuperluminalPerf.svg)](https://www.nuget.org/packages/SuperluminalPerf/)
+# SuperluminalPerf [![Build Status](https://github.com/xoofx/SuperluminalPerf/workflows/ci/badge.svg?branch=master)](https://github.com/xoofx/SuperluminalPerf/actions) [![NuGet](https://img.shields.io/nuget/v/SuperluminalPerf.svg)](https://www.nuget.org/packages/SuperluminalPerf/)
 
 <img align="right" width="128px" height="128px" src="img/logo.png">
 
