@@ -4,7 +4,7 @@
 
 SuperluminalPerf is a small .NET managed wrapper around the [Superluminal PerformanceAPI](https://www.superluminal.eu/docs/documentation.html).
 
-Superluminal is an outsdanding profiler that supports .NET (Core, Framework) applications and provides mixed .NET and Native call stacks.
+[Superluminal](https://www.superluminal.eu) is an outstanding profiler that supports .NET (Core, Framework) applications and provides mixed .NET and Native call stacks.
 
 ## Features
 
