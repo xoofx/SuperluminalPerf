@@ -23,8 +23,8 @@ SuperluminalPerf.SetCurrentThreadName("Hello!");
 
 // You can mark code with begin/end markers
 SuperluminalPerf.BeginEvent("MyMarker");
-Console.WriteLine("Hello World! Wait for 3s");
-Thread.Sleep(3000);
+Console.WriteLine("Hello World! Wait for 100ms");
+Thread.Sleep(100);
 SuperluminalPerf.EndEvent();
 ```
 
