@@ -1,6 +1,6 @@
 # SuperluminalPerf [![build](https://github.com/xoofx/SuperluminalPerf/actions/workflows/build.yml/badge.svg)](https://github.com/xoofx/SuperluminalPerf/actions/workflows/build.yml) [![NuGet](https://img.shields.io/nuget/v/SuperluminalPerf.svg)](https://www.nuget.org/packages/SuperluminalPerf/)
 
-<img align="right" width="128px" height="128px" src="img/logo.png">
+<img align="right" width="128px" height="128px" src="https://raw.githubusercontent.com/xoofx/SuperluminalPerf/main/img/logo.png">
 
 SuperluminalPerf is a small .NET managed wrapper around the [Superluminal PerformanceAPI](https://www.superluminal.eu/docs/documentation.html).
 
@@ -9,7 +9,7 @@ SuperluminalPerf is a small .NET managed wrapper around the [Superluminal Perfor
 ## Features
 
 - One-to-One mapping with the native Superluminal PerformanceAPI (API Version `2.0`)
-- Compatible with .NET 5.0
+- Compatible with .NET 6.0
 - Provides [binaries](#binaries) or [source embedding](#source-embedding) through a single NuGet package
 
 ## Usage
@@ -30,7 +30,7 @@ SuperluminalPerf.EndEvent();
 
 Running with Superluminal will produce the following markers:
 
-![Superluminal Marker Example](img/superluminal_marker_example.png)
+![Superluminal Marker Example](https://raw.githubusercontent.com/xoofx/SuperluminalPerf/main/img/superluminal_marker_example.png)
 
 ## Binaries
 

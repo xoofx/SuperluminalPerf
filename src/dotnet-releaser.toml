@@ -1,0 +1,6 @@
+# configuration file for dotnet-releaser
+[msbuild]
+project = "SuperluminalPerf.sln"
+[github]
+user = "xoofx"
+repo = "SuperluminalPerf"
