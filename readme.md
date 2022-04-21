@@ -16,7 +16,10 @@ SuperluminalPerf is a small .NET managed wrapper around the [Superluminal Perfor
 
 ```c#
 // Make sure to initialize Superluminal Performance API at the beginning of your app
+// By default will try to load the Superluminal dll from Program files default installation path.
 SuperluminalPerf.Initialize();
+// If Superluminal is not installed in its default path, you'll have to provide an explicit path to the DLL:
+// SuperluminalPerf.Initialize($@"E:\Superluminal\Performance\API\dll\{(IntPtr.Size == 8 ? "x64" : "x86")}\PerformanceAPI.dll");
 
 // You can set the thread name
 SuperluminalPerf.SetCurrentThreadName("Hello!");
