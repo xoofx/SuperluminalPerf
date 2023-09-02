@@ -1,5 +1,7 @@
 using System;
+#if NET6_0_OR_GREATER
 using System.Buffers;
+#endif
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -42,6 +44,7 @@ static unsafe class SuperluminalPerf
         if (_initialized) return;
         _initialized = true;
 
+#if NET6_0_OR_GREATER
         // Only x86 and x64 are supported for now
         var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture switch
         {
@@ -53,8 +56,12 @@ static unsafe class SuperluminalPerf
             Architecture.S390x => "s390x",
             _ => throw new ArgumentOutOfRangeException()
         };
-
+#else
+        // Only x86 and x64 are supported for now
+        var arch = IntPtr.Size == 8 ? "x64" : "x86";
+#endif
         var localPathToPerformanceAPIDLL = pathToPerformanceAPIDLL ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Superluminal", "Performance", "API", "dll", arch, "PerformanceAPI.dll");
+
         if (!File.Exists(localPathToPerformanceAPIDLL) || !NativeLibrary.TryLoad(localPathToPerformanceAPIDLL, out var handle))
         {
             return;
@@ -82,6 +89,7 @@ static unsafe class SuperluminalPerf
     {
         if (!Enabled || _nativeSetCurrentThreadName == null) return;
 
+#if NET6_0_OR_GREATER
         var byteCount = Encoding.UTF8.GetByteCount(name);
         if (byteCount <= 32)
         {
@@ -103,6 +111,13 @@ static unsafe class SuperluminalPerf
             }
             ArrayPool<byte>.Shared.Return(buffer);
         }
+#else
+        var buffer = Encoding.UTF8.GetBytes(name);
+        fixed (byte* pName = buffer)
+        {
+            _nativeSetCurrentThreadName(pName, (ushort)name.Length);
+        }
+#endif
     }
 
     /// <summary>
@@ -143,6 +158,7 @@ static unsafe class SuperluminalPerf
         if (Enabled && _nativeEndEvent != null) _nativeEndEvent();
     }
 
+#if NET6_0_OR_GREATER
     /// <summary>
     /// Set the name of the current thread to the specified thread name.
     /// </summary>
@@ -175,6 +191,7 @@ static unsafe class SuperluminalPerf
         }
         return default;
     }
+#endif
 
     /// <summary>
     /// Returned by <see cref="SuperluminalPerf.BeginEvent(string,string?)"/> and can be used with using dispose pattern.
@@ -288,4 +305,29 @@ static unsafe class SuperluminalPerf
         public void* EndFiberSwitch;
     }
 #pragma warning restore 649
+
+
+#if NETSTANDARD2_0
+    private static class NativeLibrary
+    {
+        public static bool TryLoad(string path, out IntPtr handle)
+        {
+            handle = LoadLibrary(path);
+            return handle != IntPtr.Zero;
+        }
+
+        public static bool TryGetExport(IntPtr handle, string name, out IntPtr entryPtr)
+        {
+            entryPtr = GetProcAddress(handle, name);
+            return entryPtr != IntPtr.Zero;
+        }
+
+
+        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern IntPtr LoadLibrary(string libraryName);
+
+        [DllImport("kernel32", CharSet = CharSet.Ansi, SetLastError = true)]
+        private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+    }
+#endif
 }
