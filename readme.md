@@ -8,8 +8,8 @@ SuperluminalPerf is a small .NET managed wrapper around the [Superluminal Perfor
 
 ## Features
 
-- One-to-One mapping with the native Superluminal PerformanceAPI (API Version `2.0`)
-- Compatible with .NET 6.0
+- One-to-One mapping with the native Superluminal PerformanceAPI (API Version `3.0`)
+- Compatible with .NET 6.0+
 - Provides [binaries](#binaries) or [source embedding](#source-embedding) through a single NuGet package
 
 ## Usage

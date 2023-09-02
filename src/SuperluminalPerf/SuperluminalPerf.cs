@@ -23,7 +23,7 @@ static unsafe class SuperluminalPerf
     /// <summary>
     /// Version supported.
     /// </summary>
-    public const uint Version = (2 << 16);
+    public const uint Version = (3 << 16);
 
     /// <summary>
     /// Allows to enable/disable markers. Default is enabled.
@@ -42,7 +42,19 @@ static unsafe class SuperluminalPerf
         if (_initialized) return;
         _initialized = true;
 
-        var localPathToPerformanceAPIDLL = pathToPerformanceAPIDLL ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Superluminal", "Performance", "API", "dll", IntPtr.Size == 8 ? "x64" : "x86", "PerformanceAPI.dll");
+        // Only x86 and x64 are supported for now
+        var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture switch
+        {
+            Architecture.X86 => "x86",
+            Architecture.X64 => "x64",
+            Architecture.Arm => "arm",
+            Architecture.Arm64 => "arm64",
+            Architecture.Wasm => "wasm",
+            Architecture.S390x => "s390x",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        var localPathToPerformanceAPIDLL = pathToPerformanceAPIDLL ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Superluminal", "Performance", "API", "dll", arch, "PerformanceAPI.dll");
         if (!File.Exists(localPathToPerformanceAPIDLL) || !NativeLibrary.TryLoad(localPathToPerformanceAPIDLL, out var handle))
         {
             return;
@@ -260,6 +272,7 @@ static unsafe class SuperluminalPerf
 
     private unsafe struct PerformanceAPI_Functions
     {
+        // API 2.0
         public void* SetCurrentThreadName;
         public void* SetCurrentThreadNameN;
         public void* BeginEvent;
@@ -267,6 +280,12 @@ static unsafe class SuperluminalPerf
         public void* BeginEventWide;
         public void* BeginEventWideN;
         public void* EndEvent;
+
+        // API 3.0 (We don't expose them)
+        public void* RegisterFiber;
+        public void* UnregisterFiber;
+        public void* BeginFiberSwitch;
+        public void* EndFiberSwitch;
     }
 #pragma warning restore 649
 }
