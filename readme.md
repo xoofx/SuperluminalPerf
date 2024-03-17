@@ -69,4 +69,4 @@ Adapted logo `performance` by [Sophia Bai](https://thenounproject.com/sophiabai/
 
 ## Author
 
-Alexandre Mutel aka [xoofx](http://xoofx.com).
+Alexandre Mutel aka [xoofx](https://xoofx.github.io).
